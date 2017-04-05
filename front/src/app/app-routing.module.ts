@@ -1,23 +1,15 @@
-import { NgModule }             from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from "app/not-found.component";
-import { HeroComponent } from "app/hero/hero.component";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-const appRoutes: Routes = [
-  //{ path: '', redirectTo: '/hero', pathMatch: 'full' },
-  { path: 'hero', component: HeroComponent },
-  { path: '**', component: PageNotFoundComponent }
+const routes: Routes = [
+  {
+    path: '',
+    children: []
+  }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(
-      appRoutes
-    )
-  ],
-  exports: [
-    RouterModule
-  ],
-  providers: []
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
