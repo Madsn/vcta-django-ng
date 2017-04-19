@@ -14,11 +14,13 @@ import { DashboardModule } from "app/dashboard/dashboard.module";
 import { ScoreboardModule } from "app/scoreboard/scoreboard.module";
 import { PageNotFoundComponent } from "app/not-found.component";
 import 'hammerjs';
+import { RulesComponent } from './rules/rules.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RulesComponent
   ],
   imports: [
     BrowserModule,
