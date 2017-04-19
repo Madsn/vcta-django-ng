@@ -9,3 +9,13 @@ class Hero(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Trip(models.Model):
+    """
+    Represents a Trip.
+    """
+    name = models.TextField()
+
+    def __str__(self):
+        return self.name

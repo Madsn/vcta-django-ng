@@ -27,15 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# CELERY STUFF
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Muscat'
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,8 +39,7 @@ INSTALLED_APPS = [
     'channels',
     'rest_framework',
     'corsheaders',
-    'hero_service',
-    'djcelery'
+    'vcta_service'
 ]
 
 MIDDLEWARE = [
@@ -67,7 +57,7 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8000',
 )
 
-ROOT_URLCONF = 'heroes.urls'
+ROOT_URLCONF = 'vcta.urls'
 
 TEMPLATES = [
     {
@@ -85,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'heroes.wsgi.application'
+WSGI_APPLICATION = 'vcta.wsgi.application'
 
 
 # Database
@@ -140,6 +130,6 @@ STATIC_URL = '/static/'
 CHANNEL_LAYERS = {
     'default': {
         "BACKEND": "asgiref.inmemory.ChannelLayer",
-        'ROUTING': 'heroes.routing.channel_routing',
+        'ROUTING': 'vcta.routing.channel_routing',
     },
 }

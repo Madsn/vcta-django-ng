@@ -1,6 +1,6 @@
 from channels.routing import route_class
 
-from hero_service.consumers import Demultiplexer
+from vcta_service.consumers import Demultiplexer
 
 
 channel_routing = [

@@ -14,3 +14,16 @@ class HeroBinding(WebsocketBinding):
 
     def has_permission(self, user, action, pk):
         return True
+
+
+class TripBinding(WebsocketBinding):
+    model = models.Trip
+    stream = 'trip'
+    fields = ['__all__']
+
+    @classmethod
+    def group_names(cls, instance):
+        return ['trip-updates']
+
+    def has_permission(self, user, action, pk):
+        return True
