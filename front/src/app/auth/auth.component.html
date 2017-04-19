@@ -1,0 +1,13 @@
+<button (click)="newUser = false">Login</button>
+<button (click)="newUser = true">Sign up</button>
+<router-outlet name='auth'></router-outlet>
+<div class="auth-card">
+  <div [hidden]="newUser">
+    <div>Login</div>
+    <app-login></app-login>
+  </div>
+  <div [hidden]="!newUser">
+    <div>Sign up</div>
+    <app-signup></app-signup>
+  </div>
+</div>

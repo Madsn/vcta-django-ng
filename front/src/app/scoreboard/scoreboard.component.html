@@ -1,0 +1,54 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="javascript:void(0)" [ngClass]="{'active': this.showTeams}" (click)="this.showTeams = true">Teams</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="javascript:void(0)" [ngClass]="{'active': !this.showTeams}" (click)="this.showTeams = false">Individuals</a>
+  </li>
+</ul>
+<div class="table-responsive">
+  <table class="table table-striped" [hidden]="!this.showTeams">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Team name</th>
+        <th>Captain</th>
+        <th># of Members</th>
+        <th>Total Km</th>
+        <th>Km/members</th>
+        <th>Cycling days/members</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of this.teams; let i = index;">
+        <th>{{i+1}}</th>
+        <td>{{team.name}}</td>
+        <td>{{team.captain}}</td>
+        <td>{{team.memberCount}}</td>
+        <td>{{team.totalKm}}</td>
+        <td>{{team.avgKm}}</td>
+        <td>{{team.avgDays}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-striped" [hidden]="this.showTeams">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Username</th>
+        <th>Team</th>
+        <th>Total Km</th>
+        <th>Cycling days</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let individual of this.individuals; let i = index;">
+        <th>{{i+1}}</th>
+        <td>{{individual.name}}</td>
+        <td>{{individual.team}}</td>
+        <td>{{individual.totalKm}}</td>
+        <td>{{individual.days}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

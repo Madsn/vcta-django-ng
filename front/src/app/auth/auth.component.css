@@ -1,0 +1,12 @@
+.auth-card {
+  margin: 24px auto 0 auto;
+  width: 360px;
+}
+
+.auth-form {
+  padding-top: 14px;
+}
+
+.input-fullwidth {
+  width: 100%;
+}

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HeroComponent } from "app/hero/hero.component";
+import { ScoreboardComponent } from './scoreboard.component';
 
 const routes: Routes = [
-  { path: 'heroes', component: HeroComponent }
+  { path: 'scoreboard', component: ScoreboardComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HeroRoutingModule { }
+export class ScoreboardRoutingModule { }
