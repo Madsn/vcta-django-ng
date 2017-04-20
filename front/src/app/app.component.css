@@ -1,3 +1,7 @@
+.navbar-toggler {
+  margin: 10px 0;
+}
+
 .navbar {
   height: 61px;
   border-color: #e7e7e7;
