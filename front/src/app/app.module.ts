@@ -15,6 +15,8 @@ import { ScoreboardModule } from "app/scoreboard/scoreboard.module";
 import { PageNotFoundComponent } from "app/not-found.component";
 import 'hammerjs';
 import { RulesComponent } from './rules/rules.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BusyModule } from 'angular2-busy';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { RulesComponent } from './rules/rules.component';
     RulesComponent
   ],
   imports: [
+    NgbModule.forRoot(),
+    BusyModule,
     BrowserModule,
     FormsModule,
     CoreModule,
