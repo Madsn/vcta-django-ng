@@ -22,3 +22,13 @@ class TripList(generics.ListCreateAPIView):
 class TripDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Trip.objects.all()
     serializer_class = serializers.TripSerializer
+
+
+class TeamList(generics.ListCreateAPIView):
+    queryset = models.Team.objects.all()
+    serializer_class = serializers.TeamSerializer
+
+
+class TeamDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Team.objects.all()
+    serializer_class = serializers.TeamSerializer

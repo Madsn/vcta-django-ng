@@ -23,3 +23,13 @@ class Trip(models.Model):
 
     def __str__(self):
         return self.user.username + " " + str(self.date) + " " + str(self.distance)
+
+class Team(models.Model):
+    """
+    Represents a Team.
+    """
+    name = models.CharField(max_length=30)
+    captain = models.ForeignKey(User)
+
+    def __str__(self):
+        return self.name

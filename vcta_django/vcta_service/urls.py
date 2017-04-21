@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^hero/(?P<pk>\d+)$', views.HeroDetail.as_view(), name='hero_detail'),
     url(r'^trip/$', views.TripList.as_view(), name='trip_list'),
     url(r'^trip/(?P<pk>\d+)$', views.TripDetail.as_view(), name='trip_detail'),
+    url(r'^team/$', views.TeamList.as_view(), name='team_list'),
+    url(r'^team/(?P<pk>\d+)$', views.TeamDetail.as_view(), name='team_detail'),
 ]

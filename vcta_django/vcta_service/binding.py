@@ -27,3 +27,16 @@ class TripBinding(WebsocketBinding):
 
     def has_permission(self, user, action, pk):
         return True
+
+
+class TeamBinding(WebsocketBinding):
+    model = models.Team
+    stream = 'team'
+    fields = ['__all__']
+
+    @classmethod
+    def group_names(cls, instance):
+        return ['team-updates']
+
+    def has_permission(self, user, action, pk):
+        return True
