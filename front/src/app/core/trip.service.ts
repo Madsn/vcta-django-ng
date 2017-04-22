@@ -26,4 +26,8 @@ export class TripService {
       .post(`${this.baseUrl}`, JSON.stringify(t), {headers: this.headers}).map((r) => r.json());
   }
 
+  delete(id: Number): Observable<Response>{
+    return this.http
+      .delete(`${this.baseUrl}${id}`);
+  }
 }
