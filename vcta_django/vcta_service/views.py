@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, filters
 
 from . import models
 from . import serializers
@@ -17,6 +17,9 @@ class HeroDetail(generics.RetrieveUpdateDestroyAPIView):
 class TripList(generics.ListCreateAPIView):
     queryset = models.Trip.objects.all()
     serializer_class = serializers.TripSerializer
+    filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ('date',)
+    ordering = ('-date',)
 
 
 class TripDetail(generics.RetrieveUpdateDestroyAPIView):
