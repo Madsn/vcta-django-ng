@@ -58,10 +58,18 @@ export class DashboardComponent implements OnInit {
         console.log(x);
         this.openTripForm = false;
         this.trips.push(x.json());
+        this.trips.sort((a: Trip, b: Trip) => {
+          if (a.date < b.date) return 1;
+          else if (a.date > b.date) return -1;
+          else {
+            if (a.last_updated < b.last_updated) return 1;
+            else if (a.last_updated > b.last_updated) return -1;
+          }
+          return 0;
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
 }

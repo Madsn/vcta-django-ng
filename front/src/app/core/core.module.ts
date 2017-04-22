@@ -5,6 +5,7 @@ import { Ng2DjangoChannelsDemultiplexingModule } from 'ng2-django-channels-demul
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { WebsocketService } from './websocket.service';
+import { TripService } from './trip.service';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { WebsocketService } from './websocket.service';
     Ng2DjangoChannelsDataBindingModule,
     Ng2DjangoChannelsDemultiplexingModule.forRoot({websocket_url: 'ws://127.0.0.1:8000/api/ws'})
   ],
-  providers: [WebsocketService],
+  providers: [WebsocketService, TripService],
   exports: [BrowserAnimationsModule]
 })
 export class CoreModule { }

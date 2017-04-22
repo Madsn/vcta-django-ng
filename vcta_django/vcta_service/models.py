@@ -20,9 +20,11 @@ class Trip(models.Model):
     user = models.ForeignKey(User)
     date = models.DateField()
     distance = models.DecimalField(decimal_places=2, max_digits=5, validators = [MinValueValidator(0.01), MaxValueValidator(300)])
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username + " " + str(self.date) + " " + str(self.distance)
+
 
 class Team(models.Model):
     """
