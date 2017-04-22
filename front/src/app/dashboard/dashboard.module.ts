@@ -7,6 +7,7 @@ import { BusyModule } from 'angular2-busy';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { DashboardComponent } from './dashboard.component';
     FormsModule,
     NgbModule,
     HttpModule,
-    BusyModule
+    BusyModule,
+    CoreModule
   ],
   declarations: [DashboardComponent]
 })

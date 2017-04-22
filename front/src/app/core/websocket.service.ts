@@ -6,9 +6,17 @@ interface Hero {
   name: String;
 }
 
+export interface Trip {
+  id?: any;
+  date: any;
+  distance: any;
+  user: any;
+}
+
 @Injectable()
 export class WebsocketService {
   constructor(private webSocketDataBindingService: WebSocketDataBindingService) {
+    /*
     webSocketDataBindingService.subscribe(
       // Django Channels Demultiplexer Stream
       'hero',
@@ -26,25 +34,39 @@ export class WebsocketService {
         }
       }
     );
+    */
+    webSocketDataBindingService.subscribe(
+      // Django Channels Demultiplexer Stream
+      'trip',
+      // Django model
+      'vcta_service.trip',
+      (payload: DataBinding) => {
+        if(payload.action === 'create') {
+          console.log(payload);
+        } else if(payload.action === 'update') {
+          console.log(payload);
+        } else if(payload.action === 'delete') {
+          console.log(payload);
+        } else {
+          console.log(payload);
+        }
+      }
+    );
   }
 
-  private create(hero: Hero): void {
+  create(trip: Trip): void {
     this.webSocketDataBindingService.create(
-      'hero', 'hero_service.hero', {'name': hero.name});
+      'trip', 'trip_service.trip', {'user': trip.user, 'date': trip.date, 'distance': trip.distance});
   }
 
-  private update(hero: Hero): void {
+  update(trip: Trip): void {
     this.webSocketDataBindingService.update(
-      'hero', 'hero_service.hero', hero.id, {'name': hero.name});
+      'trip', 'trip_service.trip', trip.id, {'user': trip.user, 'date': trip.date, 'distance': trip.distance});
   }
 
-  delete(hero: Hero): void {
+  delete(trip: Trip): void {
     this.webSocketDataBindingService.delete(
-      'hero', 'hero_service.hero', hero.id);
+      'trip', 'trip_service.trip', trip.id);
   }
 
-  public clicked(): void {
-    const hero = {name: 'test', id: 0};
-    this.create(hero);
-  }
 }
