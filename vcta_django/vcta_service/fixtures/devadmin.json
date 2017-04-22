@@ -1,5 +1,5 @@
 [{
-  "model": "auth.user",
+  "model": "vcta_service.user",
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$30000$hZBsd7FpWEfJ$IfqBNy2QZldjBLuf3RTGFU4ZO2nI81sOStlwNlcIXiY=",

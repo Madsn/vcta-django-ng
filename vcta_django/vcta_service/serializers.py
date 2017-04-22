@@ -18,3 +18,10 @@ class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Team
         fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = '__all__'
+

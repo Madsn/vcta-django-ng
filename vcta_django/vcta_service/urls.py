@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^trip/(?P<pk>\d+)$', views.TripDetail.as_view(), name='trip_detail'),
     url(r'^team/$', views.TeamList.as_view(), name='team_list'),
     url(r'^team/(?P<pk>\d+)$', views.TeamDetail.as_view(), name='team_detail'),
+    url(r'^user/$', views.UserList.as_view(), name='user_list'),
+    url(r'^user/(?P<pk>\d+)$', views.UserDetail.as_view(), name='user_detail'),
 ]

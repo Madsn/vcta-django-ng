@@ -40,3 +40,16 @@ class TeamBinding(WebsocketBinding):
 
     def has_permission(self, user, action, pk):
         return True
+
+
+class UserBinding(WebsocketBinding):
+    model = models.User
+    stream = 'user'
+    fields = ['__all__']
+
+    @classmethod
+    def group_names(cls, instance):
+        return ['user-updates']
+
+    def has_permission(self, user, action, pk):
+        return True
