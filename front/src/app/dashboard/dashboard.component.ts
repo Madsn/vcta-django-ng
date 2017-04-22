@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Http, Response, Headers } from '@angular/http';
-import { WebsocketService, Trip } from '../core/websocket.service';
+import { WebsocketService } from '../core/websocket.service';
+import { TripService } from '../core/trip.service';
+import { Trip } from '../core/core.models';
 
 const now = new Date();
 
@@ -15,11 +17,11 @@ export class DashboardComponent implements OnInit {
 
   openTripForm: boolean = false;
   datePickerModel: NgbDateStruct = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
-  distance: number = 0;
+  distance: number = null;
   busy: Promise<any>;
   trips: Trip[] = [];
 
-  constructor(config: NgbDatepickerConfig, private http:Http, private wsService: WebsocketService) {
+  constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService) {
     config.minDate = {year: 2017, month: 4, day: 1};
     config.maxDate = {year: 2017, month: 4, day: 31};
 
@@ -34,15 +36,12 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('http://localhost:8000/api/trip/').toPromise()
-      .then((result) => {
-        console.log(result);
-        console.log(result.json());
-        this.trips = result.json();
-      })
-      .catch((err) => {
-        console.error(err);
-      }) ;
+    this.tripService
+      .getAll()
+      .subscribe(
+        t => { this.trips = t },
+        e => { console.error(e) }
+        );
   }
 
   getDatePickerDate() {
@@ -51,25 +50,24 @@ export class DashboardComponent implements OnInit {
 
   onAddTripSubmit() {
     //this.wsService.create({date: this.getDatePickerDate(), distance: this.distance, user: 1});
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    this.busy = this.http.post('http://localhost:8000/api/trip/', JSON.stringify({date: this.getDatePickerDate(), distance: this.distance, user: 1}), { headers: headers })
-      .toPromise();
-    this.busy.then((x) => {
-        console.log(x);
-        this.openTripForm = false;
-        this.trips.push(x.json());
-        this.trips.sort((a: Trip, b: Trip) => {
-          if (a.date < b.date) return 1;
-          else if (a.date > b.date) return -1;
-          else {
-            if (a.last_updated < b.last_updated) return 1;
-            else if (a.last_updated > b.last_updated) return -1;
-          }
-          return 0;
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.tripService.save({date: this.getDatePickerDate(), distance: this.distance, user: 1}).subscribe((t) => {
+      this.trips.push(t);
+      this.trips = sortTrips(this.trips);
+      this.distance = null;
+      this.openTripForm = false;
+    });
   }
+}
+
+function sortTrips(trips: Trip[]): Trip[] {
+  trips.sort((a: Trip, b: Trip) => {
+    if (a.date < b.date) return 1;
+    else if (a.date > b.date) return -1;
+    else {
+      if (a.last_updated < b.last_updated) return 1;
+      else if (a.last_updated > b.last_updated) return -1;
+    }
+    return 0;
+  });
+  return trips;
 }

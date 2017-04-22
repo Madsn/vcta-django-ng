@@ -3,5 +3,5 @@ export interface Trip {
   date: any;
   distance: any;
   user: any;
-  last_updated: any;
+  last_updated?: any;
 }
