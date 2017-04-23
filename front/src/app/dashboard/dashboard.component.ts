@@ -4,7 +4,7 @@ import { Http, Response, Headers } from '@angular/http';
 import { WebsocketService } from '../core/websocket.service';
 import { TripService } from '../core/trip.service';
 import { Trip } from '../core/core.models';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 const now = new Date();
 
