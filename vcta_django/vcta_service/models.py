@@ -16,7 +16,11 @@ class Hero(models.Model):
 
 
 class User(AbstractUser):
-    pass
+    full_name = models.CharField(max_length=30)
+    team = models.ForeignKey('Team', null=True, blank=True)
+
+    def __str__(self):
+        return self.username
 
 
 class Trip(models.Model):
@@ -37,7 +41,7 @@ class Team(models.Model):
     Represents a Team.
     """
     name = models.CharField(max_length=30)
-    captain = models.ForeignKey(User)
+    captain = models.ForeignKey(User, related_name="captain")
 
     def __str__(self):
         return self.name

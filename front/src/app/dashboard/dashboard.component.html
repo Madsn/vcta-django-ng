@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-5">
-    <div class="card dashboard-card">
+    <div class="card dashboard-card" [ngBusy]="busyUserCard">
       <div class="card-header">
         My stats
       </div>
@@ -9,33 +9,26 @@
         <table class="table table-hover">
           <thead>
           </thead>
-          <tbody>
+          <tbody >
             <tr>
               <td>Full name</td>
-              <td>
-                Mikkel Madsen
-              </td>
+              <td>{{userInfo.full_name}}</td>
             </tr>
             <tr>
               <td>Total distance</td>
-              <td>0.00
-                km</td>
+              <td>{{userStats.totalDistance}}</td>
             </tr>
             <tr>
               <td>Number of trips</td>
-              <td>
-                0
-              </td>
+              <td>{{userStats.numberTrips}}</td>
             </tr>
             <tr>
               <td>Cycling days</td>
-              <td>
-                0
-              </td>
+              <td>{{userStats.cyclingDays}}</td>
             </tr>
             <tr>
               <td>Team</td>
-              <td>Team Name</td>
+              <td>{{userInfo.team}}</td>
             </tr>
           </tbody>
         </table>
@@ -58,7 +51,7 @@
       </div>
       <div class="card-block">
         <div class="row">
-          <div class="col-md-12" [ngBusy]="busy">
+          <div class="col-md-12" [ngBusy]="busyTripCard">
             <div id="addtripform" [hidden]="!this.openTripForm" style="display: block;">
               <form (ngSubmit)="this.onAddTripSubmit()" name="trip-add-form" id="trip-add-form">
                 <div class="form-group row">

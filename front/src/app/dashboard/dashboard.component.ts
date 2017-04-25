@@ -3,10 +3,17 @@ import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Http, Response, Headers } from '@angular/http';
 import { WebsocketService } from '../core/websocket.service';
 import { TripService } from '../core/trip.service';
-import { Trip } from '../core/core.models';
+import { UserService } from '../core/user.service';
+import { Trip, User } from '../core/core.models';
 import { Subscription } from 'rxjs/Subscription';
 
 const now = new Date();
+
+interface UserStats {
+  totalDistance?: Number;
+  numberTrips?: Number;
+  cyclingDays?: Number;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -18,11 +25,15 @@ export class DashboardComponent implements OnInit {
 
   openTripForm: boolean;
   datePickerModel: NgbDateStruct;
-  distance: number;
-  busy: Subscription;
-  trips: Trip[] = [];
+  distance: number = 0;
 
-  constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService) {
+  busyTripCard: Subscription;
+  busyUserCard: Subscription;
+  trips: Trip[] = [];
+  userInfo: User = {username: null, full_name: null, email: null, date_joined: null};
+  userStats: UserStats = {totalDistance: null, numberTrips: null, cyclingDays: null};
+
+  constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService, private userService: UserService) {
     this.resetAddTripForm();
 
     config.minDate = {year: 2017, month: 4, day: 1};
@@ -39,22 +50,26 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.busy = this.tripService.getAll().subscribe(
-      t => { this.trips = t },
+    this.busyTripCard = this.tripService.getAll().subscribe(
+      t => { this.trips = t; this.updateUserStats(); },
       e => { console.error(e) }
+    );
+    this.busyUserCard = this.userService.get().subscribe(
+      u => { this.userInfo = u; console.log(this.userInfo); }
     );
   }
 
   getDatePickerDate() {
-    return this.datePickerModel.year + "-" + this.datePickerModel.month + "-" + this.datePickerModel.day;
+    return new Date(this.datePickerModel.year, this.datePickerModel.month -1, this.datePickerModel.day);
   }
 
   onAddTripSubmit() {
     //this.wsService.create({date: this.getDatePickerDate(), distance: this.distance, user: 1});
-    this.busy = this.tripService.save({date: this.getDatePickerDate(), distance: this.distance, user: 1})
+    this.busyTripCard = this.tripService.save({date: this.getDatePickerDate(), distance: this.distance, user: 1})
     .subscribe(
       (t) => {
         this.trips.splice(locationOf(t, this.trips, tripCompare) + 1, 0, t);
+        this.updateUserStats();
         this.resetAddTripForm();
       },
       (e) => console.error(e)
@@ -62,16 +77,32 @@ export class DashboardComponent implements OnInit {
   }
 
   resetAddTripForm() {
-      this.distance = null;
+      this.distance = 0;
       this.openTripForm = false;
       this.datePickerModel = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
   }
 
   deleteTrip(trip: Trip) {
-    this.busy = this.tripService.delete(trip.id).subscribe(
-      r => { this.trips.splice(locationOf(trip, this.trips, tripCompare), 1); },
+    this.busyTripCard = this.tripService.delete(trip.id).subscribe(
+      r => { this.trips.splice(locationOf(trip, this.trips, tripCompare), 1); this.updateUserStats(); },
       e => console.error(e)
-    );
+    )
+  }
+
+  updateUserStats() {
+    this.userStats.numberTrips = this.trips.length;
+    this.userStats.totalDistance = this.trips.reduce((prevVal, currentObj) => { console.log(currentObj); return prevVal + currentObj.distance; }, 0);
+    let cyclingDates: Date[] = [];
+    this.userStats.cyclingDays = this.trips.reduce((prevVal, currentObj) => {
+      console.log(cyclingDates);
+      console.log(cyclingDates.indexOf(currentObj.date));
+      if (cyclingDates.indexOf(currentObj.date) > -1) {
+        return prevVal;
+      } else {
+        cyclingDates.push(currentObj.date);
+        return prevVal + 1;
+      }
+    }, 0);
   }
 }
 

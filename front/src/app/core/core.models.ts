@@ -1,7 +1,16 @@
 export interface Trip {
-  id?: any;
-  date: any;
-  distance: any;
-  user: any;
-  last_updated?: any;
+  id?: number;
+  date: Date;
+  distance: number;
+  user: number;
+  last_updated?: Date;
+}
+
+export interface User {
+  id?: number;
+  username: string;
+  full_name: string;
+  team?: string;
+  email: string;
+  date_joined: any;
 }

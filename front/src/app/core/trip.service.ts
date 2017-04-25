@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Trip } from './core.models';
+import * as moment from "moment";
+
+Date.prototype.toJSON = function() { return moment(this).format('YYYY-MM-DD');};
 
 @Injectable()
 export class TripService {
@@ -17,15 +20,21 @@ export class TripService {
   getAll(): Observable<Trip[]>{
     let trips$ = this.http
       .get(`${this.baseUrl}`, {headers: this.headers})
-      .map((r) => r.json())
+      .map(mapTrips)
       .catch(this.handleError);
       return trips$;
   }
 
   save(t: Trip): Observable<Trip>{
     return this.http
-      .post(`${this.baseUrl}`, JSON.stringify(t), {headers: this.headers})
-      .map((r) => r.json())
+      .post(`${this.baseUrl}`, JSON.stringify({
+        id: t.id,
+        distance: t.distance,
+        date: moment(t.date).format('YYYY-MM-DD'),
+        user: t.user,
+        last_updated: t.last_updated,
+      }), {headers: this.headers})
+      .map((r) => toTrip(r.json()))
       .catch(this.handleError);
   }
 
@@ -39,4 +48,26 @@ export class TripService {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
   }
+}
+
+function mapTrips(response:Response): Trip[]{
+  // The response of the API has a results
+  // property with the actual results
+  let json = response.json();
+  if (json) {
+    return json.map(toTrip)
+  } else {
+    return [];
+  }
+}
+
+function toTrip(r:any): Trip{
+  let trip = <Trip>({
+    id: r.id,
+    date: r.date,
+    distance: parseFloat(r.distance),
+    last_updated: r.last_updated,
+    user: r.user
+  });
+  return trip;
 }
