@@ -16,13 +16,15 @@ const now = new Date();
 })
 export class DashboardComponent implements OnInit {
 
-  openTripForm: boolean = false;
-  datePickerModel: NgbDateStruct = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
-  distance: number = null;
+  openTripForm: boolean;
+  datePickerModel: NgbDateStruct;
+  distance: number;
   busy: Subscription;
   trips: Trip[] = [];
 
   constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService) {
+    this.resetAddTripForm();
+
     config.minDate = {year: 2017, month: 4, day: 1};
     config.maxDate = {year: 2017, month: 4, day: 31};
 
@@ -53,11 +55,16 @@ export class DashboardComponent implements OnInit {
     .subscribe(
       (t) => {
         this.trips.splice(locationOf(t, this.trips, tripCompare) + 1, 0, t);
-        this.distance = null;
-        this.openTripForm = false;
+        this.resetAddTripForm();
       },
       (e) => console.error(e)
     );
+  }
+
+  resetAddTripForm() {
+      this.distance = null;
+      this.openTripForm = false;
+      this.datePickerModel = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
   }
 
   deleteTrip(trip: Trip) {

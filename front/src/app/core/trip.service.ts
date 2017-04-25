@@ -17,17 +17,26 @@ export class TripService {
   getAll(): Observable<Trip[]>{
     let trips$ = this.http
       .get(`${this.baseUrl}`, {headers: this.headers})
-      .map((r) => r.json());
+      .map((r) => r.json())
+      .catch(this.handleError);
       return trips$;
   }
 
   save(t: Trip): Observable<Trip>{
     return this.http
-      .post(`${this.baseUrl}`, JSON.stringify(t), {headers: this.headers}).map((r) => r.json());
+      .post(`${this.baseUrl}`, JSON.stringify(t), {headers: this.headers})
+      .map((r) => r.json())
+      .catch(this.handleError);
   }
 
   delete(id: Number): Observable<Response>{
     return this.http
-      .delete(`${this.baseUrl}${id}`);
+      .delete(`${this.baseUrl}${id}`)
+      .catch(this.handleError);
+  }
+
+  handleError(error: any) {
+    console.error(error);
+    return Observable.throw(error.json().error || 'Server error');
   }
 }
