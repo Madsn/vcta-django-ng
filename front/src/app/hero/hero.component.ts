@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WebsocketService } from '../core/websocket.service';
+import { WebsocketService } from '../core/services/websocket.service';
 
 @Component({
   templateUrl: './hero.component.html',

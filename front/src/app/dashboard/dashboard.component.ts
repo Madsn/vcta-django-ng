@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Http, Response, Headers } from '@angular/http';
-import { WebsocketService } from '../core/websocket.service';
-import { TripService } from '../core/trip.service';
-import { UserService } from '../core/user.service';
+import { WebsocketService } from '../core/services/websocket.service';
+import { TripService } from '../core/services/trip.service';
+import { UserService } from '../core/services/user.service';
 import { Trip, User } from '../core/core.models';
 import { Subscription } from 'rxjs/Subscription';
 

@@ -36,7 +36,7 @@ import { BusyModule } from 'angular2-busy';
     HeroModule,
     ScoreboardModule,
     DashboardModule,
-    AuthModule
+    AuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
