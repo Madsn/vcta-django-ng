@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Http, Response, Headers } from '@angular/http';
+import { Store } from '@ngrx/store';
 import { WebsocketService } from '../core/services/websocket.service';
 import { TripService } from '../core/services/trip.service';
 import { UserService } from '../core/services/user.service';
 import { Trip, User } from '../core/core.models';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { getTrips } from '../core/reducers/trip.reducer';
 
 const now = new Date();
 
@@ -29,11 +32,15 @@ export class DashboardComponent implements OnInit {
 
   busyTripCard: Subscription;
   busyUserCard: Subscription;
-  trips: Trip[] = [];
+  //trips: Trip[] = [];
+  trips: Observable<Trip>;
   userInfo: User = {username: null, full_name: null, email: null, date_joined: null};
   userStats: UserStats = {totalDistance: null, numberTrips: null, cyclingDays: null};
 
-  constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService, private userService: UserService) {
+  constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService, private userService: UserService, private store: Store<Trip>) {
+    this.store.dispatch(getTrips());
+    this.trips = store.select("trips");
+
     this.resetAddTripForm();
 
     config.minDate = {year: 2017, month: 4, day: 1};
@@ -50,10 +57,12 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    /*
     this.busyTripCard = this.tripService.getAll().subscribe(
       t => { this.trips = t; this.updateUserStats(); },
       e => { console.error(e) }
     );
+    */
     this.busyUserCard = this.userService.get().subscribe(
       u => { this.userInfo = u; console.log(this.userInfo); }
     );
@@ -65,10 +74,11 @@ export class DashboardComponent implements OnInit {
 
   onAddTripSubmit() {
     //this.wsService.create({date: this.getDatePickerDate(), distance: this.distance, user: 1});
+    // TODO: Refactor for redux
     this.busyTripCard = this.tripService.save({date: this.getDatePickerDate(), distance: this.distance, user: 1})
     .subscribe(
       (t) => {
-        this.trips.splice(locationOf(t, this.trips, tripCompare) + 1, 0, t);
+        //this.trips.splice(locationOf(t, this.trips, tripCompare) + 1, 0, t);
         this.updateUserStats();
         this.resetAddTripForm();
       },

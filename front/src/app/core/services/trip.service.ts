@@ -17,6 +17,10 @@ export class TripService {
     this.headers.append('Content-Type', 'application/json');
   }
 
+  getTrips(): Observable<Trip[]>{
+    return this.getAll();
+  }
+
   getAll(): Observable<Trip[]>{
     let trips$ = this.http
       .get(`${this.baseUrl}`, {headers: this.headers})
@@ -29,7 +33,7 @@ export class TripService {
     return this.http
       .post(`${this.baseUrl}`, JSON.stringify({
         id: t.id,
-        distance: t.distance,
+        distance: t.distance.toString().replace(',','.'),
         date: moment(t.date).format('YYYY-MM-DD'),
         user: t.user,
         last_updated: t.last_updated,
