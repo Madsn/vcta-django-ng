@@ -5,7 +5,7 @@ import { GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR } from '../reducers/trip.
 import { TripService } from '../services/trip.service';
 
 @Injectable()
-export class TripsEffects {
+export class TripEffects {
   constructor( private actions$ : Actions,
                private tripService : TripService ) {
   }

@@ -7,7 +7,7 @@ import { BusyModule } from 'angular2-busy';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import { CoreModule } from '../core/core.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import { CoreModule } from '../core/core.module';
     NgbModule,
     HttpModule,
     BusyModule,
-    CoreModule
+    SharedModule
   ],
   declarations: [DashboardComponent]
 })

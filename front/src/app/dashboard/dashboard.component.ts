@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Http, Response, Headers } from '@angular/http';
 import { Store } from '@ngrx/store';
-import { WebsocketService } from '../core/services/websocket.service';
-import { TripService } from '../core/services/trip.service';
-import { UserService } from '../core/services/user.service';
-import { Trip, User } from '../core/core.models';
+import { WebsocketService } from '../shared/services/websocket.service';
+import { TripService } from '../shared/services/trip.service';
+import { UserService } from '../shared/services/user.service';
+import { Trip, User } from '../shared/models';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
-import { getTrips } from '../core/reducers/trip.reducer';
+import { getTrips } from '../shared/reducers/trip.reducer';
 
 const now = new Date();
 

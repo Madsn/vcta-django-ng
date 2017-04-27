@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataBinding, WebSocketDataBindingService } from 'ng2-django-channels-data-binding';
-import { Trip } from '../core.models';
+import { Trip } from '../models';
 
 interface Hero {
   id: any;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Trip } from '../core.models';
+import { Trip } from '../models';
 import * as moment from "moment";
 
 Date.prototype.toJSON = function() { return moment(this).format('YYYY-MM-DD');};
