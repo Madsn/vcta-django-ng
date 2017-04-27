@@ -8,8 +8,6 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { SERVICES } from './services';
 import { COMPONENTS } from './components';
-import { tripReducer } from './reducers/trip.reducer';
-import { TripEffects } from './effects/trip.effects';
 
 @NgModule({
   imports: [
@@ -17,8 +15,6 @@ import { TripEffects } from './effects/trip.effects';
     BrowserAnimationsModule,
     Ng2DjangoChannelsDataBindingModule,
     Ng2DjangoChannelsDemultiplexingModule.forRoot({websocket_url: 'ws://127.0.0.1:8000/api/ws'}),
-    StoreModule.provideStore({tripReducer}),
-    EffectsModule.run(TripEffects),
   ],
   declarations: [COMPONENTS],
   providers: [SERVICES],

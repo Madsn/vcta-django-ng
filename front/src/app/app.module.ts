@@ -19,6 +19,8 @@ import 'hammerjs';
 import { RulesComponent } from './rules/rules.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BusyModule } from 'angular2-busy';
+import { tripReducer } from './shared/reducers/trip.reducer';
+import { TripEffects } from './shared/effects/trip.effects';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { BusyModule } from 'angular2-busy';
     ScoreboardModule,
     DashboardModule,
     AuthModule,
+    StoreModule.provideStore({tripReducer}),
+    EffectsModule.run(TripEffects),
   ],
   providers: [],
   bootstrap: [AppComponent]

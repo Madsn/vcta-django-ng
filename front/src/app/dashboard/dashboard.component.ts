@@ -8,7 +8,7 @@ import { UserService } from '../shared/services/user.service';
 import { Trip, User } from '../shared/models';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
-import { getTrips } from '../shared/reducers/trip.reducer';
+import { getTrips, addTrip } from '../shared/reducers/trip.reducer';
 
 const now = new Date();
 
@@ -33,13 +33,14 @@ export class DashboardComponent implements OnInit {
   busyTripCard: Subscription;
   busyUserCard: Subscription;
   //trips: Trip[] = [];
-  trips: Observable<Trip>;
+  trips: Observable<Trip[]>;
   userInfo: User = {username: null, full_name: null, email: null, date_joined: null};
   userStats: UserStats = {totalDistance: null, numberTrips: null, cyclingDays: null};
 
-  constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService, private userService: UserService, private store: Store<Trip>) {
+  constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService, private userService: UserService, private store: Store<any>) {
     this.store.dispatch(getTrips());
-    this.trips = store.select("trips");
+    const getTripsState = (state) => state.trips;
+    this.trips = this.store.select(getTripsState);
 
     this.resetAddTripForm();
 
@@ -73,8 +74,10 @@ export class DashboardComponent implements OnInit {
   }
 
   onAddTripSubmit() {
-    //this.wsService.create({date: this.getDatePickerDate(), distance: this.distance, user: 1});
-    // TODO: Refactor for redux
+    //thiswsService.create({date: this.getDatePickerDate(), distance: this.distance, user: 1});
+    this.store.dispatch(addTrip({date: this.getDatePickerDate(), distance: this.distance, user: 1}));
+
+    /*
     this.busyTripCard = this.tripService.save({date: this.getDatePickerDate(), distance: this.distance, user: 1})
     .subscribe(
       (t) => {
@@ -84,6 +87,7 @@ export class DashboardComponent implements OnInit {
       },
       (e) => console.error(e)
     );
+    */
   }
 
   resetAddTripForm() {
@@ -93,13 +97,16 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteTrip(trip: Trip) {
+    /*
     this.busyTripCard = this.tripService.delete(trip.id).subscribe(
       r => { this.trips.splice(locationOf(trip, this.trips, tripCompare), 1); this.updateUserStats(); },
       e => console.error(e)
     )
+    */
   }
 
   updateUserStats() {
+    /*
     this.userStats.numberTrips = this.trips.length;
     this.userStats.totalDistance = this.trips.reduce((prevVal, currentObj) => { console.log(currentObj); return prevVal + currentObj.distance; }, 0);
     let cyclingDates: Date[] = [];
@@ -113,6 +120,11 @@ export class DashboardComponent implements OnInit {
         return prevVal + 1;
       }
     }, 0);
+    */
+  }
+
+  debugInfo() {
+    this.trips.subscribe((t) => console.log(t));
   }
 }
 

@@ -22,10 +22,12 @@ export class TripService {
   }
 
   getAll(): Observable<Trip[]>{
+    console.log('getAll called');
     let trips$ = this.http
       .get(`${this.baseUrl}`, {headers: this.headers})
       .map(mapTrips)
       .catch(this.handleError);
+      console.log(trips$);
       return trips$;
   }
 

@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group row">
 									<div class="offset-sm-2 col-sm-10">
-										<input type="button" (click)="this.openTripForm = false" class="btn btn-danger" value="Cancel">
+										<input type="button" (click)="this.openTripForm = false; this.debugInfo()" class="btn btn-danger" value="Cancel">
 										<button type="submit" class="btn btn-primary">Submit</button>
 									</div>
 								</div>
@@ -44,10 +44,10 @@
             <button class="btn btn-primary float-sm-right" [hidden]="this.openTripForm" (click)="this.openTripForm = true" style="margin-bottom: 10px;">
               <i class="fa fa-plus" aria-hidden="true"></i> Add a new trip
             </button>
-            <div class="float-sm-left" [hidden]="this.trips.length != 0">
+            <div class="float-sm-left" *ngIf="!this.trips">
               <p>No trips registered</p>
             </div>
-            <table class="table table-striped table-hover" [hidden]="this.trips.length == 0">
+            <table class="table table-striped table-hover" *ngIf="this.trips">
               <thead>
                 <tr>
                   <th>Day</th>
@@ -56,7 +56,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let trip of trips; let i = index;">
+                <tr *ngFor="let trip of trips | async; let i = index;">
                   <td>{{trip.date | date:'d'}}</td>
                   <td>{{trip.distance}}</td>
                   <td>
