@@ -8,7 +8,7 @@ import { UserService } from '../shared/services/user.service';
 import { Trip, User } from '../shared/models';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
-import { getTrips, addTrip } from '../shared/reducers/trip.reducer';
+import { getTrips, addTrip, deleteTrip } from '../shared/reducers/trip.reducer';
 
 const now = new Date();
 
@@ -33,13 +33,17 @@ export class DashboardComponent implements OnInit {
   busyTripCard: Subscription;
   busyUserCard: Subscription;
   //trips: Trip[] = [];
-  trips: Observable<Trip[]>;
+  trips: any;
   userInfo: User = {username: null, full_name: null, email: null, date_joined: null};
   userStats: UserStats = {totalDistance: null, numberTrips: null, cyclingDays: null};
 
   constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService, private userService: UserService, private store: Store<any>) {
     this.store.dispatch(getTrips());
-    const getTripsState = (state) => state.trips;
+    const getTripsState = (state) => {
+      //console.log(state);
+      if (state.tripReducer == undefined) return undefined;
+      return state.tripReducer.trips;
+    };
     this.trips = this.store.select(getTripsState);
 
     this.resetAddTripForm();
@@ -97,6 +101,7 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteTrip(trip: Trip) {
+    this.store.dispatch(deleteTrip(trip));
     /*
     this.busyTripCard = this.tripService.delete(trip.id).subscribe(
       r => { this.trips.splice(locationOf(trip, this.trips, tripCompare), 1); this.updateUserStats(); },
@@ -124,6 +129,10 @@ export class DashboardComponent implements OnInit {
   }
 
   debugInfo() {
+    console.log(this.trips);
+    this.trips.forEach(element => {
+      console.log(element);
+    });
     this.trips.subscribe((t) => console.log(t));
   }
 }

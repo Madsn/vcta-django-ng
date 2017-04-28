@@ -41,7 +41,7 @@ import { TripEffects } from './shared/effects/trip.effects';
     ScoreboardModule,
     DashboardModule,
     AuthModule,
-    StoreModule.provideStore({tripReducer}),
+    StoreModule.provideStore({tripReducer: tripReducer}),
     EffectsModule.run(TripEffects),
   ],
   providers: [],

@@ -44,13 +44,15 @@ export class TripService {
       .catch(this.handleError);
   }
 
-  delete(id: Number): Observable<Response>{
+  delete(id: Number): Observable<Number>{
     return this.http
       .delete(`${this.baseUrl}${id}`)
+      .map((r) => { console.log(r.url.toString()); let x = r.url.toString().replace("http://localhost:8000/api/trip/", ""); console.log(x); return x; })
       .catch(this.handleError);
   }
 
   handleError(error: any) {
+    console.log('handleError');
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
   }

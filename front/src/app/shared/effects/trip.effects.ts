@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from "@ngrx/effects";
 import { Observable } from "rxjs";
-import { ADD_TRIP, ADD_TRIP_SUCCESS, ADD_TRIP_ERROR, GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR } from '../reducers/trip.reducer';
+import { DELETE_TRIP, DELETE_TRIP_SUCCESS, DELETE_TRIP_ERROR, ADD_TRIP, ADD_TRIP_SUCCESS, ADD_TRIP_ERROR, GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR } from '../reducers/trip.reducer';
 import { TripService } from '../services/trip.service';
 
 @Injectable()
@@ -23,4 +23,11 @@ export class TripEffects {
       this.tripService.save(action.payload)
            .map(trip => ({type: ADD_TRIP_SUCCESS, payload: trip}))
            .catch(() => Observable.of({type: ADD_TRIP_ERROR})));
+
+  @Effect() deleteTrip$ = this.actions$
+    .ofType(DELETE_TRIP)
+    .switchMap(action =>
+      this.tripService.delete(action.payload.id)
+           .map(trip => ({type: DELETE_TRIP_SUCCESS, payload: trip}))
+           .catch(() => Observable.of({type: DELETE_TRIP_ERROR})));
 }
