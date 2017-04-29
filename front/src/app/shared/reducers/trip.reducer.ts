@@ -40,33 +40,23 @@ export function tripReducer( state = initialState, { type, payload } ) {
     case GET_TRIPS:
       return Object.assign({}, state, {pending: true, error: null})
     case GET_TRIPS_SUCCESS:
-      console.log(payload);
-      console.log('GET_TRIPS_SUCCESS');
-      console.log(state);
       let newState = Object.assign({}, state, {trips: payload, pending: false})
       console.log(newState);
       return newState;
     case GET_TRIPS_ERROR:
       return Object.assign({}, state, {pending: false, error: "Error"})
     case ADD_TRIP:
-      console.log('ADD_TRIP');
       return Object.assign({}, state, {pending: true, error: null})
     case ADD_TRIP_SUCCESS:
-      console.log('ADD_TRIP_SUCCESS');
-      //console.log(payload);
       let newState2 = Object.assign({}, state, {trips: insertTrip(state.trips, payload), pending: false})
       console.log(newState2);
       return newState2;
     case ADD_TRIP_ERROR:
       return Object.assign({}, state, {pending: false, error: "Error"})
     case DELETE_TRIP:
-      console.log('DELETE_TRIP');
       return Object.assign({}, state, {pending: true, error: null})
     case DELETE_TRIP_SUCCESS:
-      console.log('DELETE_TRIP_SUCCESS');
-      //console.log(payload);
       let newState3 = Object.assign({}, state, {trips: state.trips.filter((t) => { return t.id != payload }), pending: false})
-      //console.log(newState3);
       return newState3;
     case DELETE_TRIP_ERROR:
       return Object.assign({}, state, {pending: false, error: "Error"})
