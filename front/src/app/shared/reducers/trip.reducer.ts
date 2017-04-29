@@ -32,37 +32,43 @@ export function deleteTrip(trip: Trip) {
 const initialState = {
   trips: [],
   pending: false,
-  error: null
+  error: null,
+  deleteError: null
 }
 
 export function tripReducer( state = initialState, { type, payload } ) {
   switch( type ) {
     case GET_TRIPS:
-      return Object.assign({}, state, {pending: true, error: null})
+      return Object.assign({}, state, {pending: true, error: null});
     case GET_TRIPS_SUCCESS:
-      let newState = Object.assign({}, state, {trips: payload, pending: false})
-      console.log(newState);
+      let newState = Object.assign({}, state, {trips: payload, pending: false});
       return newState;
     case GET_TRIPS_ERROR:
-      return Object.assign({}, state, {pending: false, error: "Error"})
+      return Object.assign({}, state, {pending: false, error: "Error"});
     case ADD_TRIP:
-      return Object.assign({}, state, {pending: true, error: null})
+      return Object.assign({}, state, {pending: true, error: null});
     case ADD_TRIP_SUCCESS:
-      let newState2 = Object.assign({}, state, {trips: insertTrip(state.trips, payload), pending: false})
-      console.log(newState2);
+      let newState2 = Object.assign({}, state, {trips: insertTrip(state.trips, payload), pending: false});
       return newState2;
     case ADD_TRIP_ERROR:
-      return Object.assign({}, state, {pending: false, error: "Error"})
+      return Object.assign({}, state, {pending: false, error: "Error"});
     case DELETE_TRIP:
-      return Object.assign({}, state, {pending: true, error: null})
+      // Optimistically remove Trip immediately
+      return Object.assign({}, state, {trips: state.trips.filter((t) => {return t.id != payload.id}),
+                                      deleteError: null});
     case DELETE_TRIP_SUCCESS:
-      let newState3 = Object.assign({}, state, {trips: state.trips.filter((t) => { return t.id != payload }), pending: false})
-      return newState3;
+      return Object.assign({}, state, {deleteError: null});
     case DELETE_TRIP_ERROR:
-      return Object.assign({}, state, {pending: false, error: "Error"})
+      // If delete failed, re-add the trip that was attempted deleted
+      // TODO: If error message indicates item already deleted, do not re-add
+      return Object.assign({}, state, {trips: insertTrip(state.trips, payload.trip), deleteError: payload.error});
     default:
       return state;
   }
+}
+
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function insertTrip(trips: Trip[], newTrip: Trip) {

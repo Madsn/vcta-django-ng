@@ -47,7 +47,7 @@ export class TripService {
   delete(id: Number): Observable<Number>{
     return this.http
       .delete(`${this.baseUrl}${id}`)
-      .map((r) => { console.log(r.url.toString()); let x = r.url.toString().replace("http://localhost:8000/api/trip/", ""); console.log(x); return x; })
+      .map((r) => { return id })
       .catch(this.handleError);
   }
 

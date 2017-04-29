@@ -30,21 +30,26 @@ export class DashboardComponent implements OnInit {
   datePickerModel: NgbDateStruct;
   distance: number = 0;
 
-  busyTripCard: Subscription;
+  tripsPending: Observable<boolean>;
+  tripsBusy: Subscription;
+
   busyUserCard: Subscription;
-  //trips: Trip[] = [];
-  trips: any;
+  trips: Observable<Trip[]>;
   userInfo: User = {username: null, full_name: null, email: null, date_joined: null};
   userStats: UserStats = {totalDistance: null, numberTrips: null, cyclingDays: null};
 
   constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService, private userService: UserService, private store: Store<any>) {
     this.store.dispatch(getTrips());
     const getTripsState = (state) => {
-      //console.log(state);
       if (state.tripReducer == undefined) return undefined;
       return state.tripReducer.trips;
     };
     this.trips = this.store.select(getTripsState);
+    const getTripsPending = (state) => {
+      if (state.tripReducer == undefined) return undefined;
+      return state.tripReducer.pending;
+    };
+    this.tripsPending = this.store.select(getTripsPending);
 
     this.resetAddTripForm();
 
@@ -61,13 +66,20 @@ export class DashboardComponent implements OnInit {
     };
   }
 
+  ngOnDestroy() {
+    this.tripsBusy && this.tripsBusy.unsubscribe();
+  }
+
   ngOnInit() {
-    /*
-    this.busyTripCard = this.tripService.getAll().subscribe(
-      t => { this.trips = t; this.updateUserStats(); },
-      e => { console.error(e) }
-    );
-    */
+    this.tripsPending
+      .subscribe((isLoading) => {
+        if (isLoading) {
+          this.tripsBusy = new Subscription();
+        } else if (this.tripsBusy && !isLoading) {
+          this.resetAddTripForm(); // TODO: Don't close on error, show validation error on input field or error toast
+          this.tripsBusy.unsubscribe();
+        }
+      })
     this.busyUserCard = this.userService.get().subscribe(
       u => { this.userInfo = u; console.log(this.userInfo); }
     );
@@ -80,18 +92,6 @@ export class DashboardComponent implements OnInit {
   onAddTripSubmit() {
     //thiswsService.create({date: this.getDatePickerDate(), distance: this.distance, user: 1});
     this.store.dispatch(addTrip({date: this.getDatePickerDate(), distance: this.distance, user: 1}));
-
-    /*
-    this.busyTripCard = this.tripService.save({date: this.getDatePickerDate(), distance: this.distance, user: 1})
-    .subscribe(
-      (t) => {
-        //this.trips.splice(locationOf(t, this.trips, tripCompare) + 1, 0, t);
-        this.updateUserStats();
-        this.resetAddTripForm();
-      },
-      (e) => console.error(e)
-    );
-    */
   }
 
   resetAddTripForm() {
@@ -102,12 +102,6 @@ export class DashboardComponent implements OnInit {
 
   deleteTrip(trip: Trip) {
     this.store.dispatch(deleteTrip(trip));
-    /*
-    this.busyTripCard = this.tripService.delete(trip.id).subscribe(
-      r => { this.trips.splice(locationOf(trip, this.trips, tripCompare), 1); this.updateUserStats(); },
-      e => console.error(e)
-    )
-    */
   }
 
   updateUserStats() {

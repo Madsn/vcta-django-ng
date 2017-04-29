@@ -18,7 +18,7 @@
       </div>
       <div class="card-block">
         <div class="row">
-          <div class="col-md-12" [ngBusy]="busyTripCard">
+          <div class="col-md-12" [ngBusy]="tripsBusy">
             <div id="addtripform" [hidden]="!this.openTripForm" style="display: block;">
               <form (ngSubmit)="this.onAddTripSubmit()" name="trip-add-form" id="trip-add-form">
                 <div class="form-group row">

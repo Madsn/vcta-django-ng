@@ -28,6 +28,6 @@ export class TripEffects {
     .ofType(DELETE_TRIP)
     .switchMap(action =>
       this.tripService.delete(action.payload.id)
-           .map(trip => ({type: DELETE_TRIP_SUCCESS, payload: trip}))
-           .catch(() => Observable.of({type: DELETE_TRIP_ERROR})));
+           .map(id => ({type: DELETE_TRIP_SUCCESS, payload: id}))
+           .catch((e) => Observable.of({type: DELETE_TRIP_ERROR, payload: {trip: action.payload, error: e}})));
 }
