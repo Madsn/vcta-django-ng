@@ -54,7 +54,7 @@ export function tripReducer( state = initialState, { type, payload } ) {
     case ADD_TRIP_SUCCESS:
       console.log('ADD_TRIP_SUCCESS');
       //console.log(payload);
-      let newState2 = Object.assign({}, state, {trips: state.trips.concat(payload), pending: false})
+      let newState2 = Object.assign({}, state, {trips: insertTrip(state.trips, payload), pending: false})
       console.log(newState2);
       return newState2;
     case ADD_TRIP_ERROR:
@@ -73,4 +73,37 @@ export function tripReducer( state = initialState, { type, payload } ) {
     default:
       return state;
   }
+}
+
+function insertTrip(trips: Trip[], newTrip: Trip) {
+  trips.splice(locationOf(newTrip, trips, tripCompare) + 1, 0, newTrip);
+  return trips;
+}
+
+function locationOf(element, array, comparer, start?, end?) {
+    if (array.length === 0)
+        return -1;
+
+    start = start || 0;
+    end = end || array.length;
+    var pivot = (start + end) >> 1;  // should be faster than dividing by 2
+
+    var c = comparer(element, array[pivot]);
+    if (end - start <= 1) return c == -1 ? pivot - 1 : pivot;
+
+    switch (c) {
+        case -1: return locationOf(element, array, comparer, start, pivot);
+        case 0: return pivot;
+        case 1: return locationOf(element, array, comparer, pivot, end);
+    };
+};
+
+const tripCompare = function(a: Trip, b: Trip) {
+  if (a.date < b.date) return 1;
+  else if (a.date > b.date) return -1;
+  else {
+    if (a.last_updated < b.last_updated) return 1;
+    else if (a.last_updated > b.last_updated) return -1;
+  }
+  return 0;
 }

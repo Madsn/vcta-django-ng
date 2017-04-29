@@ -137,30 +137,3 @@ export class DashboardComponent implements OnInit {
   }
 }
 
-function locationOf(element, array, comparer, start?, end?) {
-    if (array.length === 0)
-        return -1;
-
-    start = start || 0;
-    end = end || array.length;
-    var pivot = (start + end) >> 1;  // should be faster than dividing by 2
-
-    var c = comparer(element, array[pivot]);
-    if (end - start <= 1) return c == -1 ? pivot - 1 : pivot;
-
-    switch (c) {
-        case -1: return locationOf(element, array, comparer, start, pivot);
-        case 0: return pivot;
-        case 1: return locationOf(element, array, comparer, pivot, end);
-    };
-};
-
-const tripCompare = function(a: Trip, b: Trip) {
-  if (a.date < b.date) return 1;
-  else if (a.date > b.date) return -1;
-  else {
-    if (a.last_updated < b.last_updated) return 1;
-    else if (a.last_updated > b.last_updated) return -1;
-  }
-  return 0;
-}
