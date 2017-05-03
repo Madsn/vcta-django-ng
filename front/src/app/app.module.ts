@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +33,8 @@ import { TripEffects } from './shared/effects/trip.effects';
     NgbModule.forRoot(),
     BusyModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    ToastModule.forRoot(),
     FormsModule,
     CoreModule,
     HttpModule,

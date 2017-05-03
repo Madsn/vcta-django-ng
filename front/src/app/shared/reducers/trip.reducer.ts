@@ -59,9 +59,14 @@ export function tripReducer( state = initialState, { type, payload } ) {
     case DELETE_TRIP_SUCCESS:
       return Object.assign({}, state, {deleteError: null});
     case DELETE_TRIP_ERROR:
-      // If delete failed, re-add the trip that was attempted deleted
-      // TODO: If error message indicates item already deleted, do not re-add
-      return Object.assign({}, state, {trips: insertTrip(state.trips, payload.trip), deleteError: payload.error});
+      if (payload.error == 'Not found.') {
+        // Trip doesn't exist on server - ignore
+        return Object.assign({}, state, {deleteError: payload.error});
+        //return state;
+      } else {
+        // Rollback - re-insert trip that was attempted deleted
+        return Object.assign({}, state, {trips: insertTrip(state.trips, payload.trip), deleteError: payload.error});
+      }
     default:
       return state;
   }

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Http, Response, Headers } from '@angular/http';
 import { Store } from '@ngrx/store';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { TripService } from '../shared/services/trip.service';
 import { UserService } from '../shared/services/user.service';
@@ -33,23 +34,31 @@ export class DashboardComponent implements OnInit {
   tripsPending: Observable<boolean>;
   tripsBusy: Subscription;
 
+  deleteError: Observable<string>;
+
   busyUserCard: Subscription;
   trips: Observable<Trip[]>;
   userInfo: User = {username: null, full_name: null, email: null, date_joined: null};
   userStats: UserStats = {totalDistance: null, numberTrips: null, cyclingDays: null};
 
-  constructor(config: NgbDatepickerConfig, private http:Http, private tripService: TripService, private userService: UserService, private store: Store<any>) {
+  constructor(config: NgbDatepickerConfig, private http:Http, private userService: UserService, private store: Store<any>, public toastr: ToastsManager) {
+    this.toastr.success('testing');
     this.store.dispatch(getTrips());
-    const getTripsState = (state) => {
+
+    this.trips = this.store.select((state) => {
       if (state.tripReducer == undefined) return undefined;
       return state.tripReducer.trips;
-    };
-    this.trips = this.store.select(getTripsState);
-    const getTripsPending = (state) => {
+    });
+
+    this.tripsPending = this.store.select((state) => {
       if (state.tripReducer == undefined) return undefined;
       return state.tripReducer.pending;
-    };
-    this.tripsPending = this.store.select(getTripsPending);
+    });
+
+    this.deleteError = this.store.select((state) => {
+      if (state.tripReducer == undefined) return undefined;
+      return state.tripReducer.deleteError;
+    });
 
     this.resetAddTripForm();
 
@@ -79,7 +88,11 @@ export class DashboardComponent implements OnInit {
           this.resetAddTripForm(); // TODO: Don't close on error, show validation error on input field or error toast
           this.tripsBusy.unsubscribe();
         }
-      })
+      });
+    this.deleteError.subscribe((error) => {
+      if (error) {
+        console.error(error);
+      }});
     this.busyUserCard = this.userService.get().subscribe(
       u => { this.userInfo = u; console.log(this.userInfo); }
     );

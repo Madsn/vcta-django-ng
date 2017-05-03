@@ -54,7 +54,7 @@ export class TripService {
   handleError(error: any) {
     console.log('handleError');
     console.error(error);
-    return Observable.throw(error.json().error || 'Server error');
+    return Observable.throw(error.json().detail || 'Server error');
   }
 }
 
