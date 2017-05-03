@@ -42,7 +42,6 @@ export class DashboardComponent implements OnInit {
   userStats: UserStats = {totalDistance: null, numberTrips: null, cyclingDays: null};
 
   constructor(config: NgbDatepickerConfig, private http:Http, private userService: UserService, private store: Store<any>, public toastr: ToastsManager) {
-    this.toastr.success('testing');
     this.store.dispatch(getTrips());
 
     this.trips = this.store.select((state) => {
@@ -92,6 +91,7 @@ export class DashboardComponent implements OnInit {
     this.deleteError.subscribe((error) => {
       if (error) {
         console.error(error);
+        this.toastr.error(`Error message: ${error}`, 'Error while deleting trip');
       }});
     this.busyUserCard = this.userService.get().subscribe(
       u => { this.userInfo = u; console.log(this.userInfo); }

@@ -22,12 +22,10 @@ export class TripService {
   }
 
   getAll(): Observable<Trip[]>{
-    console.log('getAll called');
     let trips$ = this.http
       .get(`${this.baseUrl}`, {headers: this.headers})
       .map(mapTrips)
       .catch(this.handleError);
-      console.log(trips$);
       return trips$;
   }
 
@@ -52,8 +50,6 @@ export class TripService {
   }
 
   handleError(error: any) {
-    console.log('handleError');
-    console.error(error);
     return Observable.throw(error.json().detail || 'Server error');
   }
 }
