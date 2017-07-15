@@ -32,7 +32,8 @@ class Trip(models.Model):
     """
     user = models.ForeignKey(User)
     date = models.DateField()
-    distance = models.DecimalField(decimal_places=2, max_digits=5, validators = [MinValueValidator(0.01), MaxValueValidator(300)])
+    distance = models.DecimalField(decimal_places=2, max_digits=5,
+                                   validators=[MinValueValidator(0.01), MaxValueValidator(300)])
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -48,3 +49,13 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Configs(models.Model):
+    """
+    Store settings (admin use). Will contain only a single row.
+    """
+    team_management_enabled = models.BooleanField(default=True, null=False,
+                                                  help_text="Allow team management - creating teams, sending "
+                                                            "invitations, accepting invitations.")
+    trip_management_enabled = models.BooleanField(default=True, null=False, help_text="Allow adding/deleting of trips")

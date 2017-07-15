@@ -10,6 +10,7 @@ import { Trip, User } from '../shared/models';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { getTrips, addTrip, deleteTrip } from '../shared/reducers/trip.reducer';
+import { getConfigs } from '../shared/reducers/config.reducer';
 
 const now = new Date();
 
@@ -45,6 +46,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(config: NgbDatepickerConfig, private http:Http, private userService: UserService, private store: Store<any>, public toastr: ToastsManager) {
     this.store.dispatch(getTrips());
+    this.store.dispatch(getConfigs());
 
     this.trips = this.store.select((state) => {
       if (state.tripReducer == undefined) return undefined;

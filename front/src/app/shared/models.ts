@@ -20,3 +20,8 @@ export interface User {
   email: string;
   date_joined: any;
 }
+
+export interface Config {
+  team_management_enabled: boolean;
+  trip_management_enabled: boolean;
+}
