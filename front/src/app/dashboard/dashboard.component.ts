@@ -27,6 +27,8 @@ interface UserStats {
 })
 export class DashboardComponent implements OnInit {
 
+  teamState: number = 0;
+
   openTripForm: boolean;
   datePickerModel: NgbDateStruct;
   distance: number = 0;
@@ -141,6 +143,13 @@ export class DashboardComponent implements OnInit {
       console.log(element);
     });
     this.trips.subscribe((t) => console.log(t));
+  }
+
+  createTeam() {
+    console.log('createTeam');
+    console.log(this.teamState);
+    this.teamState++;
+    this.teamState = this.teamState % 3;
   }
 }
 

@@ -6,6 +6,12 @@ export interface Trip {
   last_updated?: Date;
 }
 
+export interface Team {
+  id?: number;
+  name: string;
+  captain: number;
+}
+
 export interface User {
   id?: number;
   username: string;

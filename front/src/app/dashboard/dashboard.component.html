@@ -74,13 +74,25 @@
       <div class="card-header">
         Team management
       </div>
-      <div class="card-block">
+      <div class="card-block" [hidden]="teamState!==0">
         <p>Team management is available until the competition officially starts, allowing users to form teams. The captain of a team can invite other users to join their team.</p>
         <div class="text-center">
-          <button class="btn btn-primary">
+          <button class="btn btn-primary" (click)="createTeam()">
             Create a team
           </button>
         </div>
+      </div>
+      <div class="card-block" [hidden]="teamState!==1">
+        <p>Create team form</p>
+        <button class="btn btn-primary" (click)="createTeam()">
+          Test
+        </button>
+      </div>
+      <div class="card-block" [hidden]="teamState!==2">
+        <p>Team management disabled</p>
+        <button class="btn btn-primary" (click)="createTeam()">
+          Test
+        </button>
       </div>
     </div>
 
