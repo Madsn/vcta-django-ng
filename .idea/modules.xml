@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/vcta-django-ng.iml" filepath="$PROJECT_DIR$/.idea/vcta-django-ng.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vcta_django/vcta_django.iml" filepath="$PROJECT_DIR$/vcta_django/vcta_django.iml" />
     </modules>
   </component>
 </project>

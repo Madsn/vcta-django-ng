@@ -1,3 +1,11 @@
+# TODO
+
+- [] Create team
+- [] Send invitations
+- [] Accept invitations
+- [] Authentication
+- [] Fetch scoreboard data from backend
+
 # FrontNg2
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.

@@ -1,1 +1,1 @@
-workon django-ng2-env
+activate vcta-django-ng

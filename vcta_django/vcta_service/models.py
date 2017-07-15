@@ -16,6 +16,9 @@ class Hero(models.Model):
 
 
 class User(AbstractUser):
+    """
+    Extends built-in user model.
+    """
     full_name = models.CharField(max_length=30)
     team = models.ForeignKey('Team', null=True, blank=True)
 
