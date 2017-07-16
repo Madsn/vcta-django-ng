@@ -45,3 +45,13 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
+
+
+class ConfigList(generics.ListCreateAPIView):
+    queryset = models.Config.objects.all()
+    serializer_class = serializers.ConfigSerializer
+
+
+class ConfigDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Config.objects.all()
+    serializer_class = serializers.ConfigSerializer

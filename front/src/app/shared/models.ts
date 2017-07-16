@@ -24,4 +24,6 @@ export interface User {
 export interface Config {
   team_management_enabled: boolean;
   trip_management_enabled: boolean;
+  flash_message: string;
+  welcome_message: string;
 }

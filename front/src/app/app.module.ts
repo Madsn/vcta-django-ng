@@ -22,6 +22,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BusyModule } from 'angular2-busy';
 import { tripReducer } from './shared/reducers/trip.reducer';
 import { TripEffects } from './shared/effects/trip.effects';
+import { configReducer } from './shared/reducers/config.reducer';
+import { ConfigEffects } from "./shared/effects/config.effects";
 
 @NgModule({
   declarations: [
@@ -44,8 +46,9 @@ import { TripEffects } from './shared/effects/trip.effects';
     ScoreboardModule,
     DashboardModule,
     AuthModule,
-    StoreModule.provideStore({tripReducer: tripReducer}),
+    StoreModule.provideStore({tripReducer: tripReducer, configReducer: configReducer}),
     EffectsModule.run(TripEffects),
+    EffectsModule.run(ConfigEffects),
   ],
   providers: [],
   bootstrap: [AppComponent]

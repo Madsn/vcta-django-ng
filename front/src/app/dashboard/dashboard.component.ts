@@ -6,7 +6,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { TripService } from '../shared/services/trip.service';
 import { UserService } from '../shared/services/user.service';
-import { Trip, User } from '../shared/models';
+import {Config, Trip, User} from '../shared/models';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { getTrips, addTrip, deleteTrip } from '../shared/reducers/trip.reducer';
@@ -27,7 +27,9 @@ interface UserStats {
   providers: [NgbDatepickerConfig]
 })
 export class DashboardComponent implements OnInit {
+  config: Config;
 
+  configObs: Observable<Config>;
   teamState: number = 0;
 
   openTripForm: boolean;
@@ -47,6 +49,11 @@ export class DashboardComponent implements OnInit {
   constructor(config: NgbDatepickerConfig, private http:Http, private userService: UserService, private store: Store<any>, public toastr: ToastsManager) {
     this.store.dispatch(getTrips());
     this.store.dispatch(getConfigs());
+
+    this.configObs = this.store.select((state) => {
+      if (state.configReducer == undefined) return undefined;
+      return state.configReducer.config;
+    });
 
     this.trips = this.store.select((state) => {
       if (state.tripReducer == undefined) return undefined;
@@ -100,6 +107,12 @@ export class DashboardComponent implements OnInit {
     this.busyUserCard = this.userService.get().subscribe(
       u => { this.userInfo = u; console.log(this.userInfo); }
     );
+    this.configObs
+      .subscribe((conf) => {
+        this.config = conf;
+        // TODO - determine what to show under team management based on config
+        // TODO - disable adding/deleting trips based on config
+      });
   }
 
   getDatePickerDate() {
@@ -152,6 +165,7 @@ export class DashboardComponent implements OnInit {
     console.log(this.teamState);
     this.teamState++;
     this.teamState = this.teamState % 3;
+    console.log(this.config);
   }
 }
 

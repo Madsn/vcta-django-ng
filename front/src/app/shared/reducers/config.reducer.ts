@@ -1,7 +1,6 @@
 export const GET_CONFIGS = 'GET_CONFIGS';
 export const GET_CONFIGS_SUCCESS = 'GET_CONFIGS_SUCCESS';
 export const GET_CONFIGS_ERROR = 'GET_CONFIGS_ERROR';
-import { Config } from '../models';
 
 export function getConfigs() {
   return {
@@ -10,7 +9,7 @@ export function getConfigs() {
 }
 
 const initialState = {
-  configs: [],
+  config: null,
   pending: false,
   error: null,
 };
@@ -20,7 +19,8 @@ export function configReducer( state = initialState, { type, payload } ) {
     case GET_CONFIGS:
       return Object.assign({}, state, {pending: true, error: null});
     case GET_CONFIGS_SUCCESS:
-      let newState = Object.assign({}, state, {trips: payload, pending: false});
+      console.log("reducer: got config - ", payload[0]);
+      let newState = Object.assign({}, state, {config: payload[0], pending: false});
       return newState;
     case GET_CONFIGS_ERROR:
       return Object.assign({}, state, {pending: false, error: "Error"});
@@ -28,8 +28,3 @@ export function configReducer( state = initialState, { type, payload } ) {
       return state;
   }
 }
-
-function delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-

@@ -1,18 +1,29 @@
-[{
-  "model": "vcta_service.user",
-  "pk": 1,
-  "fields": {
-    "password": "pbkdf2_sha256$30000$hZBsd7FpWEfJ$IfqBNy2QZldjBLuf3RTGFU4ZO2nI81sOStlwNlcIXiY=",
-    "last_login": "2016-10-20T16:15:01.121Z",
-    "is_superuser": true,
-    "username": "admin",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2016-10-19T22:22:54.737Z",
-    "groups": [],
-    "user_permissions": []
+[
+  {
+    "model": "vcta_service.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$30000$hZBsd7FpWEfJ$IfqBNy2QZldjBLuf3RTGFU4ZO2nI81sOStlwNlcIXiY=",
+      "last_login": "2016-10-20T16:15:01.121Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2016-10-19T22:22:54.737Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {"model": "vcta_service.config",
+    "pk": 1,
+    "fields": {
+      "team_management_enabled": true,
+      "trip_management_enabled": true,
+      "flash_message": "",
+      "welcome_message": ""
+    }
   }
-}]
+]

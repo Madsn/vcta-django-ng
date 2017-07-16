@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^team/(?P<pk>\d+)$', views.TeamDetail.as_view(), name='team_detail'),
     url(r'^user/$', views.UserList.as_view(), name='user_list'),
     url(r'^user/(?P<pk>\d+)$', views.UserDetail.as_view(), name='user_detail'),
+    url(r'^config/$', views.ConfigList.as_view(), name='config_list'),
+    url(r'^config/(?P<pk>\d+)$', views.ConfigDetail.as_view(), name='config_detail'),
 ]

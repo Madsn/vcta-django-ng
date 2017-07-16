@@ -7,7 +7,7 @@ import { Config } from '../models';
 @Injectable()
 export class ConfigService {
 
-  private baseUrl: string = 'http://localhost:8000/api/trip/';
+  private baseUrl: string = 'http://localhost:8000/api/config/';
   private headers: Headers = new Headers();
 
   constructor(private http : Http){
@@ -16,6 +16,7 @@ export class ConfigService {
   }
 
   getConfigs(): Observable<Config[]>{
+    console.log("getConfigs");
     return this.getAll();
   }
 
@@ -45,7 +46,9 @@ function mapConfigs(response:Response): Config[]{
 function toConfig(r:any): Config{
   let config = <Config>({
     team_management_enabled: r.team_management_enabled,
-    trip_management_enabled: r.trip_management_enabled
+    trip_management_enabled: r.trip_management_enabled,
+    flash_message: r.flash_message,
+    welcome_message: r.welcome_message
   });
   return config;
 }

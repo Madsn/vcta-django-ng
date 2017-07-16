@@ -25,3 +25,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = ['id', 'username', 'full_name', 'email', 'team', 'date_joined']
+
+
+class ConfigSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Config
+        fields = '__all__'

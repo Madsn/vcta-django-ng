@@ -10,4 +10,5 @@ export class AppComponent {
   constructor(public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
+  // TODO - get config from server and display flash message
 }

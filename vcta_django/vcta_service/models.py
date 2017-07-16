@@ -51,11 +51,26 @@ class Team(models.Model):
         return self.name
 
 
-class Configs(models.Model):
+class Config(models.Model):
     """
     Store settings (admin use). Will contain only a single row.
+    It would be more elegant to use constance or similar package for storing editable settings in django -
+    but this is the simplest way to have the settings available through Django-rest-framework.
     """
     team_management_enabled = models.BooleanField(default=True, null=False,
                                                   help_text="Allow team management - creating teams, sending "
                                                             "invitations, accepting invitations.")
-    trip_management_enabled = models.BooleanField(default=True, null=False, help_text="Allow adding/deleting of trips")
+    trip_management_enabled = models.BooleanField(default=True, null=False,
+                                                  help_text="Allow adding/deleting of trips")
+    flash_message = models.TextField(default=None, blank=True, null=True,
+                                     help_text="Message to show at the top of every page")
+    welcome_message = models.TextField(default=None, blank=True, null=True,
+                                       help_text="Additional welcome message on login page")
+
+    def save(self, *args, **kwargs):
+        """
+        Don't allow saving more than 1 config row
+        """
+        if Config.objects.count() >= 1:
+            return
+        super(Config, self).save(*args, **kwargs)
