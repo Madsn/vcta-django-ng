@@ -1,8 +1,16 @@
+from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
+
+
+def validate_only_one_instance(obj):
+    model = obj.__class__
+    if (model.objects.count() > 0 and
+            obj.id != model.objects.get().id):
+        raise ValidationError("Can only create 1 %s instance" % model.__name__)
 
 
 class Hero(models.Model):
@@ -67,10 +75,8 @@ class Config(models.Model):
     welcome_message = models.TextField(default=None, blank=True, null=True,
                                        help_text="Additional welcome message on login page")
 
-    def save(self, *args, **kwargs):
+    def clean(self):
         """
         Don't allow saving more than 1 config row
         """
-        if Config.objects.count() >= 1:
-            return
-        super(Config, self).save(*args, **kwargs)
+        validate_only_one_instance(self)

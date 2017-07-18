@@ -34,7 +34,7 @@ const initialState = {
   pending: false,
   error: null,
   deleteError: null
-}
+};
 
 export function tripReducer( state = initialState, { type, payload } ) {
   switch( type ) {

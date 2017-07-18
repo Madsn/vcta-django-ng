@@ -16,7 +16,7 @@ export interface User {
   id?: number;
   username: string;
   full_name: string;
-  team?: string;
+  team?: Team;
   email: string;
   date_joined: any;
 }

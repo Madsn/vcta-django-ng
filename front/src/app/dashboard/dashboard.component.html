@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-5">
     <user-stats [header]="'My Stats'" [userInfo]="userInfo" [userStats]="userStats"></user-stats>
-    <div class="card dashboard-card">
+    <div class="card dashboard-card" [hidden]="teamManagementState!=1">
       <div class="card-header">
         Team invitations
       </div>
@@ -70,31 +70,34 @@
       </div>
     </div>
 
-    <div class="card dashboard-card">
+    <div class="card dashboard-card" [hidden]="teamManagementState==0"> <!-- User is member of a team,
+                                                                        or not on a team, management is disabled -->
       <div class="card-header">
         Team management
       </div>
-      <div class="card-block" [hidden]="teamState!==0">
-        <p>Team management is available until the competition officially starts, allowing users to form teams. The captain of a team can invite other users to join their team.</p>
-        <div class="text-center">
+      <div [ngSwitch]="teamManagementState">
+        <div class="card-block" *ngSwitchCase="1"> <!-- User is not on a team, management is enabled -->
+          <p>Team management is available until the competition officially starts, allowing users to form teams. The captain of a team can invite other users to join their team.</p>
           <button class="btn btn-primary" (click)="createTeam()">
-            Create a team
+            Create Team
           </button>
         </div>
-      </div>
-      <div class="card-block" [hidden]="teamState!==1">
-        <p>Create team form</p>
-        <button class="btn btn-primary" (click)="createTeam()">
-          Test
-        </button>
-      </div>
-      <div class="card-block" [hidden]="teamState!==2">
-        <p>Team management disabled</p>
-        <button class="btn btn-primary" (click)="createTeam()">
-          Test
-        </button>
+        <div class="card-block" *ngSwitchCase="2"> <!-- User is captain of a team, management is enabled -->
+          <div class="text-center">
+            <button class="btn btn-primary" (click)="createTeam()">
+              Manage Team
+            </button>
+          </div>
+        </div>
+        <div class="card-block" *ngSwitchCase="3"> <!-- User is member of a team, management is enabled -->
+          <button class="btn btn-primary" (click)="createTeam()">
+            Leave team
+          </button>
+        </div>
+        <div class="card-block" *ngSwitchCase="4"> <!-- User is captain of a team, management is disabled -->
+          <p>Team management disabled by admin</p>
+        </div>
       </div>
     </div>
-
   </div>
 </div>

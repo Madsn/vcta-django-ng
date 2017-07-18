@@ -23,13 +23,19 @@ interface UserStats {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styles: [`
+    /deep/ .dashboard-card {
+      margin-bottom: 16px;
+    }
+  `],
   providers: [NgbDatepickerConfig]
 })
 export class DashboardComponent implements OnInit {
-  config: Config;
 
-  configObs: Observable<Config>;
+  config: Config;
+  configObs: Observable<any>;
+  teamManagementState: number = 0;
+
   teamState: number = 0;
 
   openTripForm: boolean;
@@ -52,7 +58,7 @@ export class DashboardComponent implements OnInit {
 
     this.configObs = this.store.select((state) => {
       if (state.configReducer == undefined) return undefined;
-      return state.configReducer.config;
+      return state.configReducer;
     });
 
     this.trips = this.store.select((state) => {
@@ -108,11 +114,42 @@ export class DashboardComponent implements OnInit {
       u => { this.userInfo = u; console.log(this.userInfo); }
     );
     this.configObs
-      .subscribe((conf) => {
-        this.config = conf;
-        // TODO - determine what to show under team management based on config
-        // TODO - disable adding/deleting trips based on config
+      .subscribe((state) => {
+        if (!state.pending) {
+          this.config = state.config;
+          this.setTeamManagementState();
+        } else {
+          console.log("config pending..");
+        }
       });
+  }
+
+  private setTeamManagementState() {
+    if (this.config.team_management_enabled) {
+      if (this.userInfo.team != null) {
+        if (this.userIsCaptain()) {
+          this.teamManagementState = 2;
+        } else {
+          this.teamManagementState = 3;
+        }
+      } else {
+        this.teamManagementState = 1;
+      }
+    } else {
+      if (this.userInfo.team != null) {
+        if (this.userIsCaptain()) {
+          this.teamManagementState = 4;
+        } else {
+          this.teamManagementState = 0;
+        }
+      } else {
+        this.teamManagementState = 0;
+      }
+    }
+  }
+
+  private userIsCaptain() {
+    return false;
   }
 
   getDatePickerDate() {
