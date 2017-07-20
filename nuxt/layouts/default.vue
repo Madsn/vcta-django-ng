@@ -11,12 +11,12 @@
         <div class="bg-faded collapse navbar-collapse" id="navbarNav">
           <ul class="nav navbar-nav">
             <li class="nav-item">
-              <a>Dashboard</a>
+              <router-link to="/">Dashboard</router-link>
             </li>
           </ul>
           <ul class="nav navbar-nav">
             <li class="nav-item">
-              <a>Scoreboard</a>
+              <router-link to="/scoreboard">Scoreboard</router-link>
             </li>
           </ul>
           <ul class="nav navbar-nav mr-auto">
