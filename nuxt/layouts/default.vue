@@ -1,53 +1,91 @@
 <template>
   <div>
-    <nuxt/>
+    <nav class="navbar sticky-top navbar-toggleable-md navbar-light bg-faded">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="container">
+        <a class="navbar-brand">
+          <img class="logo" src="~assets/cykel-logo.png"/>
+        </a>
+        <div class="bg-faded collapse navbar-collapse" id="navbarNav">
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <a>Dashboard</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <a>Scoreboard</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav mr-auto">
+            <li class="nav-item">
+              <a>Rules</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <a>Sign in</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container content-container">
+      <nuxt/>
+    </div>
   </div>
 </template>
 
 <style>
-html
-{
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-*, *:before, *:after
-{
-  box-sizing: border-box;
-  margin: 0;
-}
-.button--green
-{
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-.button--green:hover
-{
-  color: #fff;
-  background-color: #3b8070;
-}
-.button--grey
-{
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-.button--grey:hover
-{
-  color: #fff;
-  background-color: #35495e;
-}
+  .navbar-toggler {
+    margin: 10px 0;
+  }
+
+  .navbar {
+    height: 61px;
+    border-color: #e7e7e7;
+    border-width: 0 0 1px;
+    border-style: solid;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .navbar-brand {
+    margin-top: 6px;
+  }
+
+  .nav-item > a {
+    padding: 18px 16px 18px 16px;
+  }
+
+  .nav-item.active > a {
+    color: #fff;
+    background-color: #009dde;
+  }
+
+  .container {
+    margin: auto;
+  }
+
+  .content-container {
+    padding-top: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      width: 750px;
+    }
+  }
+  @media (min-width: 992px) {
+    .container {
+      width: 970px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .container {
+      width: 1170px;
+    }
+  }
 </style>

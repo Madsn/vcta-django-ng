@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 module.exports = {
   /*
   ** Headers of the page
@@ -17,10 +18,24 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#3B8070' },
+  // include bootstrap css
+  css: ['bootstrap/dist/css/bootstrap.css'],
+  // include bootstrap js on startup
+  plugins: ['~plugins/bootstrap.js'],
   /*
   ** Build configuration
   */
   build: {
+    vendor: ['bootstrap'],
+    plugins: [
+      // set shortcuts as global for bootstrap
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Tether: 'tether'
+      })
+    ],
     /*
     ** Run ESLINT on save
     */

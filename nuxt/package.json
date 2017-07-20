@@ -5,7 +5,10 @@
   "author": "Madsn",
   "private": true,
   "dependencies": {
-    "nuxt": "latest"
+    "axios": "^0.16.2",
+    "bootstrap": "^4.0.0-alpha.6",
+    "nuxt": "latest",
+    "tether": "^1.4.0"
   },
   "scripts": {
     "dev": "nuxt",
