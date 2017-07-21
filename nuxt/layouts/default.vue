@@ -11,22 +11,22 @@
         <div class="bg-faded collapse navbar-collapse" id="navbarNav">
           <ul class="nav navbar-nav">
             <li class="nav-item">
-              <router-link class="nav-link" to="/">Dashboard</router-link>
+              <nuxt-link class="nav-link" to="/">Dashboard</nuxt-link>
             </li>
           </ul>
           <ul class="nav navbar-nav">
             <li class="nav-item">
-              <router-link class="nav-link" to="/scoreboard">Scoreboard</router-link>
+              <nuxt-link class="nav-link" to="/scoreboard">Scoreboard</nuxt-link>
             </li>
           </ul>
           <ul class="nav navbar-nav mr-auto">
             <li class="nav-item">
-              <router-link class="nav-link" to="/rules">Rules</router-link>
+              <nuxt-link class="nav-link" to="/rules">Rules</nuxt-link>
             </li>
           </ul>
           <ul class="nav navbar-nav">
             <li class="nav-item">
-              <a>Sign in</a>
+              <nuxt-link class="nav-link" to="/login">Sign in</nuxt-link>
             </li>
           </ul>
         </div>

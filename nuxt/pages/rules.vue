@@ -6,7 +6,7 @@
       bikes to work most often and the furthest distance. The employees club has chosen to do our own VCTA
       rather than take part in the <a href="http://www.vcta.dk">official one</a>, using the money which would have
       gone to sign up fees, to buy better prizes. We are also modifying the rules a bit, allowing for other means of non-motorized transportation.</p>
-    <h4>Prizes</h4>
+    <h3>Prizes</h3>
     <p>Current plans for prizes include:</p>
     <ul>
       <li>Team with the highest average distance per member</li>
