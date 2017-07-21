@@ -19,14 +19,14 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   // include bootstrap css
-  css: ['bootstrap/dist/css/bootstrap.css'],
+  css: ['bootstrap/dist/css/bootstrap.css', 'font-awesome/css/font-awesome.css'],
   // include bootstrap js on startup
   plugins: ['~plugins/bootstrap.js'],
   /*
   ** Build configuration
   */
   build: {
-    vendor: ['bootstrap'],
+    vendor: ['bootstrap', 'axios'],
     plugins: [
       // set shortcuts as global for bootstrap
       new webpack.ProvidePlugin({
@@ -48,6 +48,9 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    modules: [
+      '@nuxtjs/font-awesome',
+    ]
   }
 }
