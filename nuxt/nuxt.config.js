@@ -19,7 +19,7 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   // include bootstrap css
-  css: ['bootstrap/dist/css/bootstrap.css', 'font-awesome/css/font-awesome.css'],
+  css: ['bootstrap/dist/css/bootstrap.css', 'font-awesome/css/font-awesome.css', '~/css/main.css'],
   // include bootstrap js on startup
   plugins: ['~plugins/bootstrap.js'],
   /*
