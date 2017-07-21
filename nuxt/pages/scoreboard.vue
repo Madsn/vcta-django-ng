@@ -1,9 +1,12 @@
 <template>
-  <ul>
-    <li v-for="trip in trips">
-      {{ trip.id }} - {{ trip.date }} - {{ trip.distance }} - {{ trip.user }}
-    </li>
-  </ul>
+  <div>
+    <h2>Scoreboard</h2>
+    <ul>
+      <li v-for="trip in trips">
+        {{ trip.id }} - {{ trip.date }} - {{ trip.distance }} - {{ trip.user }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
