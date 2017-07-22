@@ -23,11 +23,11 @@
 <script>
   export default {
     computed: {
-      tripState () { return this.$store.state.tripState }
+      tripState () { return this.$store.state.trips }
     },
     methods: {
       deleteTrip (id) {
-        this.$store.commit('deleteTrip', id)
+        this.$store.dispatch('trips/deleteTrip', id)
       }
     }
   }
